@@ -703,3 +703,62 @@ img.emote {
 		background: #c4e1ff;
 	}
 }
+
+#modal-content {
+    display: none;
+    position: fixed;
+    z-index: 9999999;
+    background: #FFF;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    max-width: 700px;
+    width: 100%;
+    text-align: center;
+    padding: 10px 20px; 
+    border: 4px solid #337AB7;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2), 0 16px 20px rgba(0,0,0,0.2);
+}
+#modal-close {
+    display: inline-block;
+    margin: 10px 6px 4px 6px;
+    text-decoration: none;
+    position: relative;
+    font-size: 16px;
+    padding: 8px 16px;
+    color: #FFF;
+    font-weight: bold;
+    text-transform: uppercase; 
+    background: #337AB7;
+}
+#modal-close:hover {
+    color: #FFF;
+}
+#modal-close:after,
+#modal-close:before {
+    position: absolute;
+    height: 2px;
+    left: 50%;
+    background: #337AB7;
+    bottom: -6px;
+    content: "";
+    transition: all 280ms ease-in-out;
+    width: 0;
+}
+#modal-close:before {
+    top: -6px;
+}
+#modal-close:hover:after,
+#modal-close:hover:before {
+    width: 100%;
+    left: 0;
+}
+
+.compact{
+	margin-top: 3em;
+	gap: 2em;
+}
+.btn{
+	
+}
+.icons{width: 70px;}

@@ -7,7 +7,7 @@
 	<meta http-equiv = 'X-UA-Compatible' ~content = 'ie=edge'>
 	<link rel = 'stylesheet' href = '/styles/bootstrap.css'>
 	<link rel = 'stylesheet' href = '/styles/style.css'>
-	<!-- <link rel = 'stylesheet' href = '/styles/noty.css'> -->
+	 <link rel = 'stylesheet' href = '/styles/noty.css'>
 	<title>Морской бой</title>
 
 	<meta property = 'og:title' content = 'Морской бой'>
@@ -158,6 +158,56 @@
 		<div class = 'opponent-writes hidden'>Печатает <div class = 'writing-dots'><span></span><span></span><span></span></div></div>
 		<div id = 'all-messages' class = 'mb-3'></div>
 	</div>
+	
+	
+	<div id="modal-content">
+		<p>Выберите страну для игры</p>
+		<div class="conteyners">
+		<div class="compact">
+			<button type="button" class="btn btn-primary">
+				<img class="icons" src="https://cdn4.iconfinder.com/data/icons/country-flag-1/744/Canada-512.png" alt="">
+				Canada
+			</button>
+<button type="button" class="btn btn-secondary">
+	<img src="https://cdn4.iconfinder.com/data/icons/world-flags-12/512/Untitled-2-20-512.png" alt="" class="icons">
+	North Korea
+</button>
+<button type="button" class="btn btn-success">
+<img src="https://cdn4.iconfinder.com/data/icons/world-flags-12/512/Untitled-2-05-512.png" alt="" class="icons">
+	Spanish
+</button>
+<button type="button" class="btn btn-danger">
+	<img src="https://cdn4.iconfinder.com/data/icons/country-flag-1/744/Japan-512.png" alt="" class="icons">
+	Japan
+</button>
+<button type="button" class="btn btn-warning">
+	<img src="https://cdn4.iconfinder.com/data/icons/country-flag-1/744/The_Peoples_Republic-512.png" alt="" class="icons">
+	China
+</button>
+<button type="button" class="btn btn-info">
+	<img src="https://cdn1.iconfinder.com/data/icons/ensign-11/512/210_Ensign_Flag_Nation_russia-512.png" class="icons" alt="">
+	Russians
+</button>
+<button type="button" class="btn btn-light">
+	<img src="https://cdn1.iconfinder.com/data/icons/ensign-11/512/170_Ensign_Flag_Nation_moldova-512.png" class="icons" alt="">
+	Moldova
+</button>
+<button type="button" class="btn btn-dark">
+	<img src="https://cdn2.iconfinder.com/data/icons/country-flag-1/744/Belgium-512.png" alt="" class="icons">
+	Belgion</button>
+		</div>
+		
+	</div>
+		<a id="modal-close" href="#close">Выбрать</a>
+	</div>
+	<script>setTimeout(function(){ 
+		const modalwin = document.getElementById('modal-content');
+		modalwin.style.display="block"; 
+		document.getElementById("modal-close").addEventListener("click", function(){
+			modalwin.style.display="none";            
+		});
+	}, 300);</script>
+
 	<script src = '/js/socket.io.4.2.0.min.js'></script>
 	<script>const socket=io({transports:['websocket']});socket.roomId='<%= roomId %>'</script>	
 	<script src = '/js/main.obf.js' defer></script>
