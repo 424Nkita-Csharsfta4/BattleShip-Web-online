@@ -8,27 +8,8 @@ const path = require('path')
 const enforce = require('express-sslify')
 
 if (process.env.NODE_ENV === 'production') app.use(enforce.HTTPS({trustProtoHeader: true}))
-console.log(`
-            ____
-              ---|
-  \/            /|     \/
-               / |\
-              /  | \        \/
-             /   || \
-            /    | | \
-           /     | |  \
-          /      | |   \
-         /       ||     \
-        /        /       \
-       /________/         \
-       ________/__________--/
- ~~~   \___________________/
-         ~~~~~~~~~~       ~~~~~~~~
-~~~~~~~~~~~~~     ~~~~~~~~~
-                               ~~~~~~~~~
-`)
-app.use(compression())//Функция Express позволяет определить 
-                     //обработчик маршрута для запросов GET к заданному URL-адресу.
+
+app.use(compression())
 
 app.use('/styles', express.static(__dirname + '/static/styles'));
 app.use('/img', express.static(__dirname + '/static/styles/img'));
@@ -51,7 +32,7 @@ app.get('/create/:idLength', async function (request, response){
 	response.redirect(`/room/${roomId}`)
 })
 
-app.get('/', async function (request, response){//start
+app.get('/', async function (request, response){
 	response.render(__dirname + '/static/html/start.html');
 })
 
@@ -95,7 +76,7 @@ const autoMissOffsets = [
     {x:  1, y: -1},
     {x:  1, y:  1}
 ]
-console.log('Гачи мучи началось',offsets)
+
 // console.clear()
 
 io.on('connection', async function(socket) {
@@ -111,19 +92,19 @@ io.on('connection', async function(socket) {
     socket.lastMessageTime = null
 	// connections.push(socket)
 
-    socket.on('подключение к комнате', async function(data){
+    socket.on('connect to room', async function(data){
         if (!data || !data.roomId) return
         let currentRoom = await getRoomById(data.roomId)
         if (currentRoom){
             if (!currentRoom.participant){
-                socket.emit('подключение к комнате', {roomId: currentRoom.id})
+                socket.emit('connect to room', {roomId: currentRoom.id})
             }
             else {
-                socket.emit('комната заполнена')
+                socket.emit('connecting room is full')
             }
         }
         else  {
-            socket.emit('error')
+            socket.emit('connecting room not found')
         }
     })
 
@@ -212,13 +193,13 @@ io.on('connection', async function(socket) {
 
                     if (currentRoom){
                         if (currentRoom.host === socket && currentRoom.participant)
-                            currentRoom.participant.emit('Противник готов')
+                            currentRoom.participant.emit('opponent ready')
                         else if (currentRoom.participant === socket)
-                            currentRoom.host.emit('Противник готов')
+                            currentRoom.host.emit('opponent ready')
 
                         if (currentRoom.host.ready && currentRoom.participant && currentRoom.participant.ready){
                             currentRoom.gameStarted = true
-                            for (let socket of currentRoom.sockets) socket.emit('Начался Батл', {currentMove: currentRoom.currentMove})
+                            for (let socket of currentRoom.sockets) socket.emit('game started', {currentMove: currentRoom.currentMove})
                         }
                     }
                 }

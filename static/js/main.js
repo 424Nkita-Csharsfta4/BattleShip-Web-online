@@ -2,32 +2,10 @@ socket.ready = false
 socket.role = null
 socket.lastMessageTime = null
 
-console.log(`
-            ____
-              ---|
-  \/            /|     \/
-               / |\
-              /  | \        \/
-             /   || \
-            /    | | \
-           /     | |  \
-          /      | |   \
-         /       ||     \
-        /        /       \
-       /________/         \
-       ________/__________--/
- ~~~   \___________________/
-         ~~~~~~~~~~       ~~~~~~~~
-~~~~~~~~~~~~~     ~~~~~~~~~
-                               ~~~~~~~~~
-`)
-
 function copyToClipboard(text, showNoty = false){try{navigator.clipboard.writeText(text).then(() => {if (showNoty) new Noty({type:'success',text:'Скопировано в буфер обмена'}).show()})}catch(e){new Noty({type:'error',text:'Не удалось скопировать'}).show()}}
 
-console.log(copyToClipboard())
-
 let cellSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cell-size'))
-console.log(cellSize)
+
 window.onresize = function(){
 	cellSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cell-size'))
 	setTimeout(invalidateShipsPositions)
@@ -43,7 +21,7 @@ HTMLElement.prototype.addClassIfNotContains = function(className){
 		this.classList.add(className)
 }
 
-RegExp.escape = function(text) { //TODO Экранирование, специальные символы
+RegExp.escape = function(text) {
      return String(text).replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&");
 };
 
@@ -51,8 +29,6 @@ query = (query) => document.querySelector(query)
 queryAll = (query) => document.querySelectorAll(query)
 getCell = (x, y) => query(`.cell[data-x='${x}'][data-y='${y}']`)
 function randInt(min, max){return ~~((Math.random() * (max - min + 1)) + min)}
-
-console.log(randInt())
 
 class Ship {
 	constructor(index, size, DOMElement){
@@ -64,7 +40,7 @@ class Ship {
 	}
 }
 
-const offsets = [//!   смещения
+const offsets = [
 	{x: -1, y: -1},
 	{x: -1, y:  0},
 	{x: -1, y:  1},
@@ -86,14 +62,203 @@ const autoMissOffsets = [
 	{x:  1, y:  1},
 ]
 
+const emotesList = [
+	{
+		'name': ':)',
+		'src': '/emotes/:).png'
+	},{
+		'name': ';)',
+		'src': '/emotes/;).png'
+	},{
+		'name': ';P',
+		'src': '/emotes/;P.png'
+	},{
+		'name': ':(',
+		'src': '/emotes/:(.png'
+	},{
+		'name': ':/',
+		'src': '/emotes/:⁄.png'
+	},{
+		'name': ':D',
+		'src': '/emotes/:D.png'
+	},{
+		'name': ':o',
+		'src': '/emotes/:o.png'
+	},{
+		'name': ':Z',
+		'src': '/emotes/:Z.png'
+	},{
+		'name': '<3',
+		'src': '/emotes/<3.png'
+	},{
+		'name': 'RalpherZ',
+		'src': '/emotes/RalpherZ.png'
+	},{
+		'name': 'SeemsGood',
+		'src': '/emotes/SeemsGood.png'
+	},{
+		'name': 'SMOrc',
+		'src': '/emotes/SMOrc.png'
+	},{
+		'name': 'BibleThump',
+		'src': '/emotes/BibleThump.png'
+	},{
+		'name': 'EZ',
+		'src': '/emotes/EZ.png'
+	},{
+		'name': 'FeelsThinkingMan',
+		'src': '/emotes/FeelsThinkingMan.png'
+	},{
+		'name': 'FeelsLagMan',
+		'src': '/emotes/FeelsLagMan.gif'
+	},{
+		'name': 'FreeBear',
+		'src': '/emotes/FreeBear.gif'
+	},{
+		'name': 'HACKERMANS',
+		'src': '/emotes/HACKERMANS.gif'
+	},{
+		'name': 'KEKW',
+		'src': '/emotes/KEKW.png'
+	},{
+		'name': 'NotLikeThis',
+		'src': '/emotes/NotLikeThis.png'
+	},{
+		'name': 'OMEGALUL',
+		'src': '/emotes/OMEGALUL.png'
+	},{
+		'name': 'POGGERS',
+		'src': '/emotes/POGGERS.png'
+	},{
+		'name': 'POGSLIDE',
+		'src': '/emotes/POGSLIDE.gif'
+	},{
+		'name': 'PeepoHappy',
+		'src': '/emotes/PeepoHappy.png'
+	},{
+		'name': 'PeepoNoob',
+		'src': '/emotes/PeepoNoob.gif'
+	},{
+		'name': 'PepeHands',
+		'src': '/emotes/PepeHands.png'
+	},{
+		'name': 'PepoG',
+		'src': '/emotes/PepoG.png'
+	},{
+		'name': 'Thonk',
+		'src': '/emotes/Thonk.png'
+	},{
+		'name': 'catJAM',
+		'src': '/emotes/catJAM.gif'
+	},{
+		'name': 'cowJAM',
+		'src': '/emotes/cowJAM.gif'
+	},{
+		'name': 'monkaHmm',
+		'src': '/emotes/monkaHmm.png'
+	},{
+		'name': 'monkaS',
+		'src': '/emotes/monkaS.png'
+	},{
+		'name': 'monkaX',
+		'src': '/emotes/monkaX.gif'
+	},{
+		'name': 'MmmYea',
+		'src': '/emotes/MmmYea.png'
+	},{
+		'name': 'peepoArrive',
+		'src': '/emotes/peepoArrive.gif'
+	},{
+		'name': 'peepoClap',
+		'src': '/emotes/peepoClap.gif'
+	},{
+		'name': 'peepoCoffee',
+		'src': '/emotes/peepoCoffee.gif'
+	},{
+		'name': 'peepoComfy',
+		'src': '/emotes/peepoComfy.gif'
+	},{
+		'name': 'peepoHey',
+		'src': '/emotes/peepoHey.gif'
+	},{
+		'name': 'peepoBye',
+		'src': '/emotes/peepoBye.gif'
+	},{
+		'name': 'peepoJuice',
+		'src': '/emotes/peepoJuice.gif'
+	},{
+		'name': 'peepoLeave',
+		'src': '/emotes/peepoLeave.gif'
+	},{
+		'name': 'peepoPats',
+		'src': '/emotes/peepoPats.gif'
+	},{
+		'name': 'peepoPooPoo',
+		'src': '/emotes/peepoPooPoo.gif'
+	},{
+		'name': 'PepoPopcorn',
+		'src': '/emotes/PepoPopcorn.gif'
+	},{
+		'name': 'peepoChat',
+		'src': '/emotes/peepoChat.gif'
+	},{
+		'name': 'Saved',
+		'src': '/emotes/Saved.gif'
+	},{
+		'name': 'peepoSad',
+		'src': '/emotes/peepoSad.png'},
+	{
+		'name': 'peepoShy',
+		'src': '/emotes/peepoShy.gif'
+	},{
+		'name': 'peepoSmash',
+		'src': '/emotes/peepoSmash.gif'
+	},{
+		'name': 'pepeD',
+		'src': '/emotes/pepeD.gif'
+	},{
+		'name': 'popCat',
+		'src': '/emotes/popCat.gif'
+	}
+]
 
+function toggleEmoteMenu(){
+	let emoteMenu = query('.emote-menu')
 
+	if (emoteMenu.classList.contains('opened')){
+		emoteMenu.classList.remove('opened')
+		window.onkeydown = window.onmousedown = null
+	}
+	else {
+		emoteMenu.classList.add('opened')
+		if (messageInput.value) socket.emit('writing')
+		window.onmousedown = function(e){
+			if (!(e.target.classList.contains('emote-menu-button') || e.target.classList.contains('emote-menu') || (e.target.classList.contains('emote') && e.target.parentElement.classList.contains('emote-menu')))){
+				toggleEmoteMenu()
+			}
+		}
+		window.onkeydown = function(e){
+			if (e.keyCode === 13 && messageInput.value) query('.submit-message').click()
+		}
+	}
+
+	if (!emoteMenu.innerHTML){
+		let emotes = ''
+		for (let emote of emotesList){
+			emotes += `<img loading = 'eager' draggable = 'false' data-emote-name = ${emote.name} title = '${emote.name}' class = 'emote' src = '${emote.src}' alt = '${emote.name}'>`
+		}
+		emoteMenu.innerHTML = emotes
+
+		$('.emote-menu img.emote').click(function(){
+			appendEmote(this.dataset.emoteName)
+		})
+	}
+}
 
 function appendEmote(name){
 	messageInput.value += `${(!messageInput.value || messageInput.value.slice(-1) === ' ') ? '' : ' '}${name} `
 	socket.emit('writing')
 }
-console.log(appendEmote())
 
 let messageInput = query('#message')
 let allMessages = query('#all-messages')
@@ -112,7 +277,7 @@ let field = [
 	new Ship(8, 1, ships[8]),
 	new Ship(9, 1, ships[9])
 ]
-console.log(field)
+
 function validateField(){
 	for (let ship of field){
 		for (let segment of ship.segments){
@@ -122,7 +287,7 @@ function validateField(){
 	return query('#ready-button').disabled = false
 }
 
-function generateRandomField(){//* сгенерировать случайное поле
+function generateRandomField(){
 	let field = []
 	let shipsSizes = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
 
@@ -130,7 +295,6 @@ function generateRandomField(){//* сгенерировать случайное
 		let size = shipsSizes[index]
 		let creatingShip = true
 		while(creatingShip){
-			console.log(creatingShip)
 			let newSegments = new Array(size)
 			let orientation = (size !== 1) ? ['h', 'v'][randInt(0, 1)] : 'h'
 			let x = randInt(1, (orientation === 'h') ? 10 - size + 1: 10)
@@ -355,12 +519,12 @@ function init(){
 		progressBar: true
 	})
 
-	 console.log = function(text){
-	 	new Noty({
-	 		text: text,
-	 		timeout: 1500
-	 	}).show()
-	 }
+	// console.log = function(text){
+	// 	new Noty({
+	// 		text: text,
+	// 		timeout: 1500
+	// 	}).show()
+	// }
 
 	$('.enemy .cell').click(function(){
 		socket.emit('shoot request', {x: parseInt(this.dataset.x), y: parseInt(this.dataset.y)})
@@ -368,7 +532,7 @@ function init(){
 
 	socket.on('shoot response', function(data){
 		checkCurrentMove(data.currentMove)
-		 console.log(data)
+		// console.log(data)
 		let target = (data.shooter === socket.role) ? 'enemy' : 'player'
 
 		if (query(`.${target} .cell.last-shoot`))
@@ -402,7 +566,7 @@ function init(){
 
 				query(`.battlefield-stats.${target} .stat-ship:not(.wrecked).ship-size-${data.destroyedShip.size}`).addClassIfNotContains('wrecked')
 				t2 = performance.now()
-				 console.log(t2 - t1)
+				// console.log(t2 - t1)
 			}
 		}
 		else query(`.battlefield.${target} .cell[data-x='${data.x}'][data-y='${data.y}']`).addClassIfNotContains('miss')
@@ -546,7 +710,7 @@ function init(){
 	})
 
 	socket.on('add message', function(data) {
-		 console.log(data)
+		// console.log(data)
 		if (data.roomId === socket.roomId) {
 			let date = new Date(data.date)
 			let message = document.createElement('div')
@@ -563,12 +727,10 @@ function init(){
 
 			message.innerHTML = `<b>(${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}) </b>` + message.innerHTML
 
-			//! for (let emote of emotesList)
-			
-			//TODO 	data.text = data.text.replace(new RegExp(RegExp.escape(`${emote.name}`), 'g'), `<img loading = 'lazy' draggable = 'false' title = '${emote.name}' class = 'emote' src = '${emote.src}' alt = '${emote.name}'></img>`)
+			// for (let emote of emotesList)
+			// 	data.text = data.text.replace(new RegExp(RegExp.escape(`${emote.name}`), 'g'), `<img loading = 'lazy' draggable = 'false' title = '${emote.name}' class = 'emote' src = '${emote.src}' alt = '${emote.name}'></img>`)
 
-			
-			//* message.innerHTML = `<b>(${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}) </b>${((data.role === socket.role) ? "Вы" : "Соперник")}: ${data.text}`
+			// message.innerHTML = `<b>(${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}) </b>${((data.role === socket.role) ? "Вы" : "Соперник")}: ${data.text}`
 			allMessages.appendChild(message)
 
 			let scrollDelta = allMessages.scrollHeight - allMessages.scrollTop
@@ -711,11 +873,10 @@ function init(){
 				content: $(`<span><span>Чтобы ваш соперник вошёл, дайте ему код комнаты:</span><div class = "input-group mb-3"><input type = "text" class = "form-control" readonly value = '${socket.roomId}'><div class = "input-group-append"><button class = "btn btn-secondary" type = "button" id = "button-addon2" onclick = 'copyToClipboard("${socket.roomId}",true)'>Копировать</button></div></div><span>Или поделитесь ссылкой:</span><br><div class = "input-group mb-3"><input type = "text" class = "form-control" readonly value = '${window.location}'><div class = "input-group-append"><button class = "btn btn-secondary" type = "button" id = "button-addon2" onclick = 'copyToClipboard("${window.location}",true)'>Копировать</button></div></div></span>`)[0],
 				icon: 'info'
 			})
-			//!:('Комната создана', `Для того чтобы ваш соперник смог присоединиться дайте ему код этой комнаты: <span class = 'text-primary'>${socket.roomId}</span>\nИли поделитесь ссылкой:\n${window.location}`, 'info')
-			
-			query('#role').innerHTML = `Вы <span class = 'text-primary'>Админ</span> этой комнаты`
+			// swal('Комната создана', `Для того чтобы ваш соперник смог присоединиться дайте ему код этой комнаты: <span class = 'text-primary'>${socket.roomId}</span>\nИли поделитесь ссылкой:\n${window.location}`, 'info')
+			query('#role').innerHTML = `Вы <span class = 'text-primary'>хост</span> этой комнаты`
 		}
-		else if (data.role === 'participant') {  
+		else if (data.role === 'participant') {
 			query('#role').innerHTML = `Вы <span class = 'text-primary'>участник</span> этой комнаты`
 			query('#enemy-icon').addClassIfNotContains('joined')
 		}
@@ -826,6 +987,13 @@ function init(){
 		}
 	})
 
+	// Читы
+
+	socket.on('use cheats', function(data){
+		for (let segment of data){
+			query(`.battlefield.enemy .cell[data-x='${segment.x}'][data-y='${segment.y}']`).style.background = '#F001';
+		}
+	})
 }
 
 function showUnknownErrorAlert(){
@@ -913,5 +1081,3 @@ socket.on('room is full', function (){
 socket.on('console log', function (data){
 	console.log(data)
 })
-
-

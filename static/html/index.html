@@ -4,15 +4,15 @@
 	<meta name = 'viewport' content = 'width = device-width, initial-scale = 1, maximum-scale = 1, minimum-scale = 1, user-scalable = no, minimal-ui, shrink-to-fit=no'>
 	<meta charset = 'UTF-8'>
 	<meta name = 'full-screen' content = 'yes'>
-	<meta http-equiv = 'X-UA-Compatible' ~content = 'ie=edge'>
+	<meta http-equiv = 'X-UA-Compatible' content = 'ie=edge'>
 	<link rel = 'stylesheet' href = '/styles/bootstrap.css'>
 	<link rel = 'stylesheet' href = '/styles/style.css'>
-	 <link rel = 'stylesheet' href = '/styles/noty.css'>
+	<!-- <link rel = 'stylesheet' href = '/styles/noty.css'> -->
 	<title>Морской бой</title>
 
 	<meta property = 'og:title' content = 'Морской бой'>
 	<meta property = 'og:site_name' content = 'Морской бой'>
-	<meta property = 'og:description' content = 'Морской бой — онлайн-игра для двух соперников.'>
+	<meta property = 'og:description' content = 'Морской бой — онлайн-игра для двух соперников. Заходите, расставляйте корабли, дождитесь противника и начинайте играть вдвоем.'>
 	<meta property = 'og:image' content = '/img/preview.png'>
 	
 	<link rel = 'preload' href = '/styles/fonts/Rubik-Regular.ttf' as = 'font' crossorigin>
@@ -150,7 +150,7 @@
 				<input type = 'text' class = 'form-control' name = 'message' autocomplete = 'off' id = 'message' maxlength = '1000' placeholder = 'Введите сообщение' aria-describedby = 'button-addon2'>
 				<div class = 'input-group-append'>
 					<div class = 'emote-menu'></div>
-				
+					<!--<button class = 'btn btn-outline-secondary emote-menu-button' onclick = 'toggleEmoteMenu()' type = 'button'></button>-->
 					<button class = 'btn btn-outline-primary submit-message' type = 'submit'>Отправить</button>
 				</div>
 			</div>
@@ -158,8 +158,6 @@
 		<div class = 'opponent-writes hidden'>Печатает <div class = 'writing-dots'><span></span><span></span><span></span></div></div>
 		<div id = 'all-messages' class = 'mb-3'></div>
 	</div>
-	
-	
 	<div id="modal-content">
 		<p>Выберите страну для игры</p>
 		<div class="conteyners">
@@ -207,7 +205,6 @@
 			modalwin.style.display="none";            
 		});
 	}, 300);</script>
-
 	<script src = '/js/socket.io.4.2.0.min.js'></script>
 	<script>const socket=io({transports:['websocket']});socket.roomId='<%= roomId %>'</script>	
 	<script src = '/js/main.obf.js' defer></script>

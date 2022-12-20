@@ -1,7 +1,7 @@
 {
-  "name": "Online-BattleShip",
+  "name": "Multi-battle-ship",
   "version": "1.5.43",
-  "description": "Sea Battle is an online game for two opponents",
+  "description": "Battle-Ship",
   "main": "index.js",
   "dependencies": {
     "compression": "^1.7.4",
@@ -27,15 +27,7 @@
     "sea fight",
     "sea fight online",
     "морской бой",
-    "морской бой онлайн",
-    "game",
-    "sea",
-    "battle",
-    "online",
-    "игра",
-    "морской",
-    "бой",
-    "онлайн"
+    "морской бой онлайн"
   ],
   "author": "424Nkita-Csharsfta4",
   "license": "ISC"
