@@ -2,6 +2,8 @@
 
 # Морской Бой
 Node.js, Express, Socket.io
+![image](https://user-images.githubusercontent.com/103760832/220107594-8ab0735a-9c2a-485a-921c-ad0455095a3f.png)
+
 
 Получилось блогодаря этой информации и видео 
 ```
